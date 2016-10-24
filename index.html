@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Facebook Group Post</title>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/nprogress.css" media="screen,projection" />
+    <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body ng-app="app">
+    <div id="index-banner" class="container">
+        <div class="section no-pad-bot">
+            <div class="container">
+
+                <h1 class="header center orange-text text-lighten-2">Facebook Auto Post</h1>
+                <div class="row center">
+                    <h5 class="header col s12 light">Post 1 status lên nhiều group khác nhau</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" ng-controller="fbController">
+
+
+        <div class="row">
+            <div class="col s6">
+                <div style="height: 91px" class="row col s12">
+                    <h5>Login Status</h5>
+                    <a ng-show="userStatus == ''" class="waves-effect waves-light btn " ng-click="login()">
+                        <i class="material-icons left">people</i> Facebook Login
+                    </a>
+                    <p>{{userStatus}}</p>
+                </div>
+                <div class="row col s12" style="margin-top: 5px;">
+                    <h5>Add a group</h5>
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">supervisor_account</i>
+                        <input id="groupId" ng-model="groupId" type="text" class="validate">
+                        <label for="groupId">Group Id</label>
+                    </div>
+
+                    <a class="waves-effect waves-light btn " ng-click="addGroup()">
+                        <i class="material-icons left">get_app</i> Add Group
+                    </a>
+                </div>
+            </div>
+            <div class="col s6">
+                <div class="row col">
+                    <h5>Post a message</h5>
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">chat</i>
+                        <textarea id="textarea1" ng-model="message" class="materialize-textarea"></textarea>
+                        <label for="textarea1">Message Content</label>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">public</i>
+                        <input id="password" ng-model="link" type="text" class="validate">
+                        <label for="password">Message Link</label>
+                    </div>
+
+                    <a class="waves-effect waves-light btn " ng-click="postMessage()">
+                        <i class="material-icons left">send</i> Post message
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h5>Group List</h5>
+
+            <table class="bordered striped">
+                <tr>
+                    <th>Image</th>
+                    <th>Group Name</th>
+                    <th>Description</th>
+                    <th>Post</th>
+                    <th>Action</th>
+                </tr>
+                <tr ng-repeat="group in savedGroups track by group.id">
+                    <td><img height="80" width="80" ng-src="{{group.cover.source}}" /></td>
+                    <td><a ng-href="https://www.facebook.com/groups/{{group.id}}">{{group.name}}</a></td>
+                    <td>{{group.description | limitTo:250}}{{group.description.length > 250 ? '...' : ''}}</td>
+                    <td><input ng-model="group.checked" type="checkbox" id="{{group.id}}" /><label for="{{group.id}}"></label></td>
+                    <td><a ng-click="deleteGroup(group)">Delete</a></td>
+                </tr>
+            </table>
+            <a style="margin-top: 20px;" class="waves-effect waves-light btn " ng-click="saveGroups()">
+                <i class="material-icons left">sd_card</i> Remember groups
+            </a>
+        </div>
+
+
+    </div>
+
+    <footer class="page-footer orange">
+        <div class="footer-copyright">
+            <div class="container">
+                Copyright by <a class="orange-text text-lighten-3" href="https://www.facebook.com/phuapple">Minh Phu Nguyen</a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/materialize.js"></script>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/nprogress.js"></script>
+    
+    <script type="text/javascript" src="js/app/app.js"></script>
+    <script type="text/javascript" src="js/app/services.js"></script>
+    <script type="text/javascript" src="js/app/controllers.js"></script>
+
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+</body>
+
+
+
+</html>
